@@ -1,11 +1,9 @@
-ag2[openai]==0.3.1
-fastapi==0.115.0
-uvicorn[standard]==0.32.0
-streamlit==1.53.0
-python-dotenv==1.0.1
-
-# --- RAG Specifics ---
-chromadb==0.6.0
-langchain-community==0.3.0
-pypdf==5.1.0
-pydantic-settings==2.4.0
+ag2[openai]>=0.10.4
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+streamlit>=1.53.0
+python-dotenv>=1.0.1
+chromadb>=0.6.0
+langchain-community>=0.3.0
+pypdf>=5.1.0
+pydantic-settings>=2.4.0
