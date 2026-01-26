@@ -2,7 +2,7 @@ import os
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.embeddings import FakeEmbeddings #We'll swap this for GitHub Models later
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from src.config import settings
 
 def run_ingestion():
