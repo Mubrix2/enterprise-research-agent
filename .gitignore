@@ -1,7 +1,8 @@
 .env
 venv/
 chroma_db/
-data/
+data/*
+!data/.gitkeep
 *.mp4
 *.mov
 # Byte-compiled / optimized / DLL files
