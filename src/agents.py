@@ -1,6 +1,6 @@
 import autogen
 from src.config import settings
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from langchain_core.embeddings import FakeEmbeddings
 
 # 1. Setup the Vector Database Connection
@@ -35,9 +35,12 @@ researcher = autogen.AssistantAgent(
 user_proxy = autogen.UserProxyAgent(
     name="UserProxy",
     human_input_mode="NEVER",
-    max_consecutive_auto_reply=3,
-    is_termination_msg=lambda x: x.get("content", "").rstrip().endswith("TERMINATE"),
-    code_execution_config={"work_dir": "research_output", "use_docker": settings.use_docker},
+    max_consecutive_auto_reply=5,
+    is_termination_msg=lambda x: x.get("content") is not None and str(x.get("content")).rstrip().endswith("TERMINATE"),
+    code_execution_config={
+        "work_dir": "research_output", 
+        "use_docker": False 
+    },
 )
 
 # 5. Register the tool so the agent can actually use it
