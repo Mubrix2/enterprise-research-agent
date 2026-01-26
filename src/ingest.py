@@ -1,7 +1,7 @@
 import os
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import DeterministicFakeEmbeddings # We'll swap this for GitHub Models later
+from langchain_core.embeddings import FakeEmbeddings #We'll swap this for GitHub Models later
 from langchain_community.vectorstores import Chroma
 from src.config import settings
 
@@ -25,7 +25,7 @@ def run_ingestion():
     # This turns text into math and saves it to the /chroma_db folder.
     print(f"--- Saving to Vector DB at {settings.db_dir} ---")
     # For now, we use a simple embedding. In the next step, we'll use actual AI embeddings.
-    embeddings = DeterministicFakeEmbeddings(size=1536) 
+    embeddings = FakeEmbeddings(size=1536) 
     
     vector_db = Chroma.from_documents(
         documents=chunks,
