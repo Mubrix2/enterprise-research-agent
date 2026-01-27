@@ -1,0 +1,10 @@
+venv/
+.venv/
+env/
+.cache/
+chroma_db/
+data/
+__pycache__/
+.git/
+.ipynb_checkpoints/
+*.pdf
