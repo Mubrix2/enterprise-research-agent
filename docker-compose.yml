@@ -1,0 +1,21 @@
+services:
+  api:
+    build: .
+    # This runs the FastAPI server
+    command: uvicorn src.api:app --host 0.0.0.0 --port 8000
+    env_file: .env
+    volumes:
+      - ./chroma_db:/app/chroma_db
+      - ./data:/app/data
+
+  frontend:
+    build: .
+    # This runs the Streamlit UI
+    command: streamlit run src/app.py --server.port=8501 --server.address=0.0.0.0
+    ports:
+      - "8501:8501"
+    env_file: .env
+    depends_on:
+      - api
+    volumes:
+      - ./data:/app/data

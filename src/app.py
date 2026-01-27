@@ -38,7 +38,7 @@ if st.button("Run Research"):
             try:
                 # 'api' is the service name defined in docker-compose
                 response = requests.post(
-                    "http://localhost:8000/research", 
+                    "http://api:8000/research", 
                     json={"query": user_query},
                     timeout=120 # Research takes time!
                 )
