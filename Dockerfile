@@ -1,23 +1,32 @@
-# Use a lightweight Python image
-FROM python:3.10-slim
+# Use an official Python runtime as a parent image
+FROM python:3.12-slim
 
-# Set the working directory inside the container
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
+
+# Set work directory
 WORKDIR /app
 
-# Install system dependencies (needed for some PDF/database tools)
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install them
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of your code
+# Copy project files
 COPY . .
 
-# Expose the ports we'll use
+# Create necessary directories
+RUN mkdir -p data chroma_db
+
+# Expose ports for FastAPI (8000) and Streamlit (8501)
 EXPOSE 8000
 EXPOSE 8501
 
-# We will define the actual startup commands in docker-compose
+# No default CMD here; we will define it in docker-compose

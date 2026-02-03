@@ -7,17 +7,20 @@ sys.path.insert(0, project_root)
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from src.main import start_research
+from src.main import start_research # This works if PYTHONPATH=/app
 
 app = FastAPI()
 
 class QueryRequest(BaseModel):
     question: str
 
+@app.get("/")
+async def root():
+    return {"status": "online", "message": "Research API is running"}
+
 @app.post("/research")
 async def research_endpoint(request: QueryRequest):
     try:
-        # Calls the agent orchestration in main.py
         answer = start_research(request.question)
         return {"answer": answer}
     except Exception as e:
@@ -25,9 +28,4 @@ async def research_endpoint(request: QueryRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(
-        app, 
-        host="127.0.0.1",  # Change this from "0.0.0.0" to "127.0.0.1"
-        port=8000,
-        log_level="info"
-    )
+    uvicorn.run(app, host="0.0.0.0", port=8000)

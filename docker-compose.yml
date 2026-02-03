@@ -1,30 +1,21 @@
 services:
   api:
     build: .
-    container_name: api
+    container_name: research_api
     ports:
       - "8000:8000"
     env_file: .env
-    volumes:
-      - ./chroma_db:/app/chroma_db
-      - ./data:/app/data
-    networks:
-      - agent-net
+    # Explicitly set the host to 0.0.0.0 via command override just in case
+    command: uvicorn src.api:app --host 0.0.0.0 --port 8000
 
   frontend:
     build: .
-    container_name: frontend
+    container_name: research_ui
+    depends_on:
+      - api
     ports:
       - "8501:8501"
     env_file: .env
-    # The frontend talks to 'api' (the service name), not 'localhost'
     environment:
-      - API_URL=http://api:8000/research
-    depends_on:
-      - api
-    networks:
-      - agent-net
-
-networks:
-  agent-net:
-    driver: bridge
+      - API_URL=http://api:8000
+    command: streamlit run src/app.py --server.address=0.0.0.0
