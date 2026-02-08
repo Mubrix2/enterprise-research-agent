@@ -7,7 +7,7 @@ An automated Research-as-a-Service (RaaS) platform that leverages **Microsoft Au
 # 🤖 Project Demo
 Here is the autonomous agent in action:
 
-![Watch the demo](./assets/demo.mp4)
+![Watch the demo](.\assets\demo.mp4)
 
 ## 🚀 Key Features
 
